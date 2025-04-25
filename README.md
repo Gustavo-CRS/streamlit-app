@@ -29,7 +29,6 @@ A Streamlit application to scrape Instagram profile data and provide a download 
 3.  **Configure Environment Variables:**
     Create a file named `.env` inside the `app` directory ([app/.env](app/.env)) with the following content:
     ```dotenv
-    # filepath: c:\Users\gustavo.consoleti\Documents\GitHub\streamlit-app\app\.env
     BUCKET_S3="your-s3-bucket-name"
     API_ENDPOINT="your-api-gateway-endpoint-url"
     ```
