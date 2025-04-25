@@ -9,8 +9,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 s3_client =  boto3.client('s3')
-bucket_name = os.getenv("BUCKET_S3")
-endpoint = os.getenv("API_ENDPOINT")
+bucket_name = st.secrets["BUCKET_S3"]
+endpoint = st.secrets["API_ENDPOINT"]
 
 def genereate_filename(profile_name, file_format):
     """Generate a filename based on the profile name and file format."""
