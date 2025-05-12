@@ -18,7 +18,7 @@ def genereate_filename(profile_name, file_format):
     extension = "csv" if file_format.lower() == "csv" else "json"
     return f"{profile_name.replace('/', '_')}_{timestamp}.{extension}"
 
-def check_s3_for_file(bucket_name, filename, max_wait_time=300, check_interval=5):
+def check_s3_for_file(bucket_name, filename, max_wait_time=900, check_interval=5):
     """Polls S3 for a file matching the prefix and returns its key."""
     if not s3_client:
         st.error("Cliente S3 não inicializado. Não é possível verificar o bucket.")
