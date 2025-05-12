@@ -145,11 +145,12 @@ with col1:
                 result = call_extractor_api(instagram_profile, file_format.lower(), filename)
                 
                 if result:
+                    transcription_file = f"transcription_{filename}"
                     # Check if the file is available in S3
-                    file_found = check_s3_for_file(bucket_name, filename)
-                    
+                    file_found = check_s3_for_file(bucket_name, transcription_file)
+                    # file_found = check_s3_for_file(bucket_name, filename)
                     if file_found:
-                        download_url = genereate_download_link(bucket_name, filename)
+                        download_url = genereate_download_link(bucket_name, transcription_file)
                         if download_url:
                             st.success('Link de download gerado com sucesso!')
                             st.markdown(f"**Clique para baixar:** [Link para download]({download_url})")
