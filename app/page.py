@@ -106,15 +106,15 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Interface Streamlit
-st.title('📷 Instagram Scrapper')
+st.title('📷 Reels Scrapper')
 
 col1, col2 = st.columns(2, gap="large")
 
-def call_extractor_api(profile: str, file_format: str, filename: str):
+def call_extractor_api(profile: str, file_format: str, number_of_reels: int, filename: str):
     try:
         response = requests.get(
-            endpoint, 
-            params={"profile": profile, "file_format": file_format, "filename": filename},
+            endpoint,
+            params={"profile": profile, "file_format": file_format, "number_of_reels": number_of_reels, "filename": filename},
         )
         
         if response.status_code == 200:
@@ -135,20 +135,19 @@ with col1:
         placeholder='@exemplo ou https://www.instagram.com/exemplo'
     )
 
-    file_format = st.selectbox('Tipo de arquivo de retorno', ['CSV', 'JSON'])
+    max_number_reels = 10
+    number_of_reels = st.selectbox('Selecione o número de reels que serão extraídos', list(range(1, max_number_reels + 1)))
     
     # Botão para gerar link
     if st.button('🚀 Processar dados'):
         if instagram_profile:
             with st.spinner('Processando... Isso pode levar alguns minutos.'):
-                filename = genereate_filename(instagram_profile, file_format)
-                result = call_extractor_api(instagram_profile, file_format.lower(), filename)
-                
+                filename = genereate_filename(instagram_profile, "csv")
+                result = call_extractor_api(instagram_profile, "csv", number_of_reels, filename)
                 if result:
                     transcription_file = f"transcription_{filename}"
                     # Check if the file is available in S3
                     file_found = check_s3_for_file(bucket_name, transcription_file)
-                    # file_found = check_s3_for_file(bucket_name, filename)
                     if file_found:
                         download_url = genereate_download_link(bucket_name, transcription_file)
                         if download_url:
